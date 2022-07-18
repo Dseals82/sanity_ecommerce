@@ -14,7 +14,8 @@ export const StateContext = ({children}) => {
     let index;
 
     const onAdd = (productToAdd, qty)=>{
-        const productInCart = cartItems.find((item) => {item._id === productToAdd._id});
+        const productInCart = cartItems.find((item) => item._id === productToAdd._id);
+        console.log('test1', productInCart)
             setTotalPrice((prevPrice) => {
                 return prevPrice + productToAdd.price * qty;
             })
@@ -22,6 +23,7 @@ export const StateContext = ({children}) => {
                 return prevTotalQty + qty;
             })
         if(productInCart){
+            console.log('testing',productInCart)
             const updatedCartItems = cartItems.map((cartProduct) => {
                 if(cartProduct._id === productToAdd._id){
                     return {...cartProduct, qty: cartProduct.qty + qty};
@@ -30,6 +32,7 @@ export const StateContext = ({children}) => {
             setCartItems(updatedCartItems);
             
         }else {
+            //this
             productToAdd.qty = qty;
             setCartItems([...cartItems, {...productToAdd}])
         }
@@ -45,7 +48,6 @@ export const StateContext = ({children}) => {
     }
 
     const toggleCartItemQty = (id, value) =>{
-    
         foundProduct = cartItems.find((item)=> item._id === id);
         index = cartItems.findIndex((product) => product._id === id);
         const newCartItems = cartItems.filter((item, i) => item._id !== id);
@@ -61,7 +63,6 @@ export const StateContext = ({children}) => {
             }
             
         }
-        console.log(newCartItems)
     }
 
     const incQty = () =>{
