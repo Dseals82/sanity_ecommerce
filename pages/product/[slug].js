@@ -8,8 +8,6 @@ const ProductDetails = ({products,product}) => {
     const {image, name, details, price } = product;
     const [index, setIndex] = useState(0);
     const {decQty, incQty, qty, onAdd} = useStateContext();
-    console.log('details', product)
-
 
   return (
     <div>
@@ -52,7 +50,7 @@ const ProductDetails = ({products,product}) => {
                     <h3>Quantity: </h3>
                     <p className='quantity-desc'>
                         <span className='minus' onClick={decQty}><AiOutlineMinus/></span>
-                        <span className='num' onClick=''>{qty}</span>
+                        <span className='num'>{qty}</span>
                         <span className='plus' onClick={incQty}><AiOutlinePlus/></span>
                         
                     </p>

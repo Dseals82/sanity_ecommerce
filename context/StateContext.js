@@ -15,18 +15,14 @@ export const StateContext = ({children}) => {
 
     const onAdd = (productToAdd, qty)=>{
         //check if product in cart
-        const productExistsInCart = cartItems.find((item)=> item._id === productToAdd._id)
-    
-
+        const productExistsInCart = cartItems.find((item)=> item._id === productToAdd._id);
             setTotalPrice((prevPrice) => {
                 return prevPrice + productToAdd.price * qty;
             })
             setTotalQuantities((prevTotalQty) => {
                 return prevTotalQty + qty;
             })
-            console.log('prouct in cartItems', cartItems)
         if(productExistsInCart){
-
             const updatedCartItems = cartItems.map((item) =>
             {
                 //find matching product and adjust number in the cart
@@ -36,52 +32,14 @@ export const StateContext = ({children}) => {
                     return item
                 }
             });
-          
-            console.log('cart items:' , updatedCartItems)
             setCartItems(updatedCartItems);
-            console.log('cart items2:' , updatedCartItems)
-            
         }else {
-            //this
             productToAdd.qty = qty;
-
-            setCartItems([...cartItems, productToAdd])
-            console.log('product not in cart:' , cartItems)
-            console.log('product to add to cart' , productToAdd)
+            setCartItems((prevCartItems) => [...prevCartItems, productToAdd])
         }
         toast.success(`${qty} ${productToAdd.name} added to the cart.`)
         setQty(1)
     }
-
-    // const onAdd = (productToAdd, qty)=>{
-    //     const productExistsInCart = cartItems.find((item)=> item._id === productToAdd._id)
-
-    //         setTotalPrice((prevPrice) => {
-    //             return prevPrice + productToAdd.price * qty;
-    //         })
-    //         setTotalQuantities((prevTotalQty) => {
-    //             return prevTotalQty + qty;
-    //         })
-    //     if(productExistsInCart){
-    //         return cartItems.map(cartItem =>
-    //             cartItem._id === productToAdd._id
-    //             ? {...cartItem, qty: cartItem.qty + qty}
-    //             : cartItem
-    //             )
-    //     }else {
-    //         //this
-    //         productToAdd.qty = qty;
-
-    //         setCartItems([...cartItems, productToAdd])
-    //         console.log('product not in cart:' , cartItems)
-    //         console.log('product to add to cart' , productToAdd)
-    //     }
-    //     toast.success(`${qty} ${productToAdd.name} added to the cart.`)
-    // }
-
-
-                
-
 
     const onRemove = (productToRemove) => {
         foundProduct = cartItems.find((item)=> item._id === productToRemove._id);
@@ -94,14 +52,13 @@ export const StateContext = ({children}) => {
     const toggleCartItemQty = (id, value) =>{
         foundProduct = cartItems.find((item)=> item._id === id);
         index = cartItems.findIndex((product) => product._id === id);
-        const newCartItems = cartItems.filter((item, i) => item._id !== id);
         if(value === 'inc'){
-            setCartItems([...newCartItems, {...foundProduct, qty: foundProduct.qty + 1}]);
+            foundProduct.qty +=1;
             setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
             setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities + 1);
         }else if (value === 'dec'){
             if(foundProduct.qty > 1){
-                setCartItems([...newCartItems, {...foundProduct, qty: foundProduct.qty - 1}]);
+                foundProduct.qty -=1;
                 setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
                 setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities - 1); 
             }
