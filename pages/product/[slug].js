@@ -8,7 +8,8 @@ const ProductDetails = ({products,product}) => {
     const {image, name, details, price } = product;
     const [index, setIndex] = useState(0);
     const {decQty, incQty, qty, onAdd} = useStateContext();
-    console.log(product)
+    console.log('details', product)
+
 
   return (
     <div>
