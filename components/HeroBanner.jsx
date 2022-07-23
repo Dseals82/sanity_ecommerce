@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { urlFor } from '../lib/client';
 
 const HeroBanner = ({heroBanner}) => {
-  console.log('hero image', heroBanner.image)
+  const heroBannerImg = heroBanner.product.toLowerCase()
   return (
     <div className='hero-banner-container'>
       <div>
@@ -12,7 +12,7 @@ const HeroBanner = ({heroBanner}) => {
         <h1>{heroBanner.largeText1}</h1>
         <img src={urlFor(heroBanner.image)} alt='headphones' className='hero-banner-image' />
         <div>
-          <Link href={`/product/${heroBanner.product}`} >
+          <Link href={`/product/${heroBannerImg}`} >
             <button type='button'>{heroBanner.buttonText}</button>
           </Link>
           <div className='desc'>
