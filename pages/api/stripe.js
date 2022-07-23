@@ -5,6 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 export default async function handler(req, res) {
+
   if (req.method === 'POST') {
       console.log(req.body.cartItems)
     try {
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
             line_items: req.body.map((item) => {
                 const img = item.image[0].asset._ref;
                 const newImage = img.replace('image-', 'https://cdn.sanity.io/images/vfxfwnaw/production/').replace('-webp', '.webp');
+                const newPrice = Math.round(item.price * 100) 
       
                 return {
                   price_data: { 
@@ -28,7 +30,7 @@ export default async function handler(req, res) {
                       name: item.name,
                       images: [newImage],
                     },
-                    unit_amount: item.price * 100,
+                    unit_amount: newPrice,
                   },
                   adjustable_quantity: {
                     enabled:true,
@@ -38,7 +40,7 @@ export default async function handler(req, res) {
                 }
               }),
             success_url: `${req.headers.origin}/success`,
-            cancel_url: `${req.headers.origin}/canceled`,
+            cancel_url: `${req.headers.origin}/?canceled=true`,
           }
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create(params);

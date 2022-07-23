@@ -24,7 +24,8 @@ const Cart = () => {
        },
       body: JSON.stringify(cartItems)
     })
-    console.log('stripe:', response.body.cartItems)
+    console.log('in cart stripe',cartItems)
+    console.log('stripe:', response.body)
     if(response.statusCode === 500) return;
     const data = await response.json()
     console.log('data:',data)
