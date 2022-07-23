@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { urlFor } from '../lib/client';
 
 const HeroBanner = ({heroBanner}) => {
-  const heroBannerImg = heroBanner.product.toLowerCase()
+  const heroBannerImg = heroBanner.product.toLowerCase();
   return (
     <div className='hero-banner-container'>
       <div>
