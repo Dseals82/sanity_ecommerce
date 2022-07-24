@@ -3,8 +3,11 @@ import {toast} from 'react-hot-toast';
 
 const Context = createContext();
 
+
+
+
 export const StateContext = ({children}) => {
-    const [showCart, setShowCart] = useState(false);
+    const [showCart, setShowCart] = useState(false); 
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantities, setTotalQuantities] = useState(0);
@@ -77,6 +80,24 @@ export const StateContext = ({children}) => {
             return prevQty - 1;
         });
     }
+
+    useEffect(() => {
+        const cart = JSON.parse(localStorage.getItem("cartItems") || '[]')
+        console.log(cart)
+        setCartItems(cart)
+        const getQty = cart.reduce((prevNum, item) => {
+            return prevNum + item.qty
+        },0)
+        const getPrice = cart.reduce((prevNum, item) => {
+            return prevNum + item.price
+        },0)
+        setTotalQuantities(getQty)
+        setTotalPrice(getPrice)
+    },[])    
+    
+    useEffect(()=>{
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));        
+    },[cartItems])
 
     const value = {
         showCart,
