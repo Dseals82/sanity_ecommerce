@@ -5,3 +5,5 @@ export {default as NavBar} from './NavBar';
 export {default as Cart} from './Cart';
 export {default as Product} from './Product';
 export {default as HeroBanner} from './HeroBanner';
+export {default as NewProduct} from './NewProduct';
+export {default as CallToAction} from './CallToAction';

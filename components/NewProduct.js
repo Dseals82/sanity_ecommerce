@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { urlFor } from '../lib/client';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import {AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-const Product = ({product: {image, name, slug, price}}) => {
+const NewProduct = ({newArrivals: {image, name, slug, price}}) => {
   return (
     <div>
-      <Link href={`/product/${slug.current}`}>
+      <Link href={`/new-arrivals/${slug.current}`}>
         <div className='product-card'>
           <img 
             src={urlFor(image && image[0])}
@@ -32,4 +32,4 @@ const Product = ({product: {image, name, slug, price}}) => {
   )
 }
 
-export default Product
+export default NewProduct

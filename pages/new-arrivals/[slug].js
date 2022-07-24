@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {client, urlFor} from '../../lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { Product } from '../../components';
+import { NewProduct } from '../../components';
 import {useStateContext} from '../../context/StateContext';
 
-const ProductDetails = ({products,product}) => {
+const NewArrivalDetails = ({newArrivals,product}) => {
     const {image, name, details, price } = product;
     const [index, setIndex] = useState(0);
     const {decQty, incQty, qty, onAdd, setShowCart} = useStateContext();
@@ -76,8 +76,8 @@ const ProductDetails = ({products,product}) => {
                 <div className='marquee'>
                     <div className='maylike-products-container track'>
                         {
-                            products.map((product) =>(
-                                <Product key={product._id} product={product} />
+                            newArrivals.map((product) =>(
+                                <NewProduct key={product._id} newArrivals={product} />
                             ))
                         }
                     </div>
@@ -88,26 +88,26 @@ const ProductDetails = ({products,product}) => {
 }
 
 export const getStaticProps = async ({params: {slug}}) => {
-    const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+    const query = `*[_type == "new-arrivals" && slug.current == '${slug}'][0]`;
     const product = await client.fetch(query);
 
-    const productsQuery = '*[_type == "product"]';
-    const products = await client.fetch(productsQuery);
+    const newArrivalsQuery = '*[_type == "new-arrivals"]';
+    const newArrivals = await client.fetch(newArrivalsQuery);
     
   
     return {
-      props: {products, product}
+      props: {newArrivals, product}
     }
   }
 
   export async function getStaticPaths() {
-      const query = `*[_type == "product"]{
+      const query = `*[_type == "new-arrivals"]{
           slug{
               current
           }
       }`
-      const products = await client.fetch(query);
-      const paths = products.map((product) => (
+      const newArrivals = await client.fetch(query);
+      const paths = newArrivals.map((product) => (
           {
               params: {
                   slug: product.slug.current 
@@ -120,4 +120,4 @@ export const getStaticProps = async ({params: {slug}}) => {
     };
   }
 
-export default ProductDetails;
+export default NewArrivalDetails;

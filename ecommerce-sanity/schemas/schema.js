@@ -8,6 +8,8 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 //import schemas
 import product from './product'
 import banner from './banner'
+import newArrivals from './newArrivals'
+import featuredProducts from './featuredProducts'
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -18,5 +20,7 @@ export default createSchema({
     /* Your types here! */
     product,
     banner,
+    newArrivals,
+    featuredProducts,
   ]),
 })
